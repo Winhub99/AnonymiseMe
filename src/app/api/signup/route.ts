@@ -71,6 +71,6 @@ export async function POST(request:Request){
 {status:500})
         
     }
-    const {username,email,password} = await request.json()
+   // const {username,email,password} = await request.json()
 }
 
