@@ -1,8 +1,15 @@
 import React from 'react'
+import dayjs from 'dayjs';
+import { Button } from './ui/button'
+import { X } from 'lucide-react'
+import { Message } from '@/model/User'
+import { useToast } from './ui/use-toast'
+import axios from 'axios'
+import { ApiResponse } from '@/types/ApiResponse'
+
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
@@ -19,12 +26,6 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-import { Button } from './ui/button'
-import { X } from 'lucide-react'
-import { Message } from '@/model/User'
-import { useToast } from './ui/use-toast'
-import axios from 'axios'
-import { ApiResponse } from '@/types/ApiResponse'
   
 
 type MessageCardProps={
@@ -40,10 +41,15 @@ const MessageCard = ({message,onMessageDelete}:MessageCardProps) => {
        })
        onMessageDelete(message._id)
     }
+    console.log("Printing the message");
+    
+    console.log(message)
+
   return (
-    <Card>
+    <Card className="card-bordered">
   <CardHeader>
-    <CardTitle>Card Title</CardTitle>
+  <div className="flex justify-between items-center">
+    <CardTitle>{message.toString()}</CardTitle>
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="destructive"><X className='w-5 h-5'/></Button>
@@ -62,14 +68,13 @@ const MessageCard = ({message,onMessageDelete}:MessageCardProps) => {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-    <CardDescription>Card Description</CardDescription>
-  </CardHeader>
-  <CardContent>
-    <p>Card Content</p>
-  </CardContent>
-  <CardFooter>
-    <p>Card Footer</p>
-  </CardFooter>
+    </div>
+    <div className="text-sm">
+          {dayjs(message.createdAt).format('MMM D, YYYY h:mm A')}
+        </div>
+        </CardHeader>
+  <CardContent></CardContent>
+  <CardFooter></CardFooter>
 </Card>
 
   )
