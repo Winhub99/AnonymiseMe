@@ -17,7 +17,11 @@ export async function POST(request: Request) {
     }
 
     const userId = user._id
+    console.log("The userId from session is:",userId);
+    
     const { acceptMessages } = await request.json()
+    console.log("The accept message of user: ",acceptMessages);
+    
     try {
         const updatedUser = await UserModel.findByIdAndUpdate(userId, { isAcceptingMessages: acceptMessages }, { new: true })
         if (!updatedUser) {
@@ -42,7 +46,7 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request:Request){
-    await dbConnect()
+    await dbConnect()    
     const session = await getServerSession(authOptions)
     const user: User = session?.user as User;
     if (!session || !session.user) {
@@ -60,8 +64,7 @@ export async function GET(request:Request){
              success: false,
              message: "User not found"
          }, { status: 404 })       
-     }
-     
+     }     
      return Response.json({
          success: true,
          message: "Accepting message state updated successfully",

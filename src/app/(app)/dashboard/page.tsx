@@ -1,13 +1,15 @@
 'use client'
+import MessageCard from '@/components/MessageCard'
 import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
+import { Switch } from '@/components/ui/switch'
 import { useToast } from '@/components/ui/use-toast'
-import {MessageCard} from '@/components/MessageCard'
 import { Message } from '@/model/User'
 import { acceptMessageSchema } from '@/schemas/acceptMessageSchema'
 import { ApiResponse } from '@/types/ApiResponse'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Switch } from '@radix-ui/react-switch'
+
 import axios, { AxiosError } from 'axios'
 import { Loader2, RefreshCcw } from 'lucide-react'
 import { User } from 'next-auth'
@@ -15,8 +17,7 @@ import { useSession } from 'next-auth/react'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-const page = () => {
-
+const UserDashboard = () => {
     const [messages, setMessages] = useState<Message[]>([])
     const [isLoading,setIsLoading] = useState(false)
     const [isSwitchLoading,setIsSwitchLoading] = useState(false)
@@ -27,6 +28,9 @@ const page = () => {
     }
 
     const {data:session} = useSession()
+    console.log("About to print session");
+    
+console.log(session);
 
     const form = useForm({
         resolver:zodResolver(acceptMessageSchema)
@@ -53,7 +57,7 @@ const page = () => {
         }finally{
             setIsSwitchLoading(false)
         }
-    },[setValue])
+    },[setValue,toast])
     const fetchMessages = useCallback(async( refresh:boolean=false)=>{
         setIsLoading(true)
         setIsSwitchLoading(false)
@@ -79,7 +83,7 @@ const page = () => {
             setIsLoading(false)
             setIsSwitchLoading(false)
         }
-    },[setIsLoading,setMessages])
+    },[setIsLoading,setMessages,toast])
 
     useEffect(()=>{
         if(!session || !session.user) return;
@@ -87,7 +91,7 @@ const page = () => {
         fetchAcceptMessage()
 
         
-    },[session,setValue,fetchAcceptMessage,fetchMessages])
+    },[session,setValue,fetchAcceptMessage,fetchMessages,toast])
 
     //handle switch change
     const handleSwitchChange = async( )=>{
@@ -112,6 +116,9 @@ const page = () => {
         }
     }
 
+    if(!session || !session.user){
+      return <div>Please login</div>
+  }
 
    const {username}= session?.user as User
    const baseUrl =`${window.location.protocol}//${window.location.host}`
@@ -124,9 +131,7 @@ const page = () => {
         description:"Profile url has been copoed to clipboard"
     })
    }
-    if(!session || !session.user){
-        return <div>Please login</div>
-    }
+    
   return (
     <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
     <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
@@ -149,7 +154,7 @@ const page = () => {
         {...register('acceptMessages')}
         checked={acceptMessages}
         onCheckedChange={handleSwitchChange}
-        disabled={isSwitchLoading}
+        // disabled={isSwitchLoading}
       />
       <span className="ml-2">
         Accept Messages: {acceptMessages ? 'On' : 'Off'}
@@ -188,4 +193,4 @@ const page = () => {
 );
 }
 
-export default page
+export default UserDashboard;
