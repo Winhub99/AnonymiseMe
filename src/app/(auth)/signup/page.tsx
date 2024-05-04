@@ -99,7 +99,7 @@ const Signup = () => {
                   </FormControl>
                   {isCheckingUsername && <Loader2 className='animate-spin'/>}
                   <p className={`text-sm ${usernameAvailMessage==="username is unique"?'text-green-500':'text-red-500'}`}>
-                    test {usernameAvailMessage}
+                   {usernameAvailMessage}
                   </p>
                   <FormMessage />
                 </FormItem>
