@@ -5,6 +5,10 @@ import UserModel from "@/model/User";
 
 export async function DELETE(request:Request,{params}:{params:{messageid:string}}){
     const messageId= params.messageid;
+    console.log("the message id is :" ,messageId);
+    console.log("And the params are ",params);
+    
+    
 await dbConnect()
 const session =await getServerSession(authOptions)
 const user:User =session?.user as User;
