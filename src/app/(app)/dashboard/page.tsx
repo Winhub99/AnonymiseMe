@@ -24,13 +24,15 @@ const UserDashboard = () => {
     const {toast} = useToast()
 
     const handleDeleteMessage = (messageId:string)=>{
+      console.log("The message id is: ",messageId);
+      
         setMessages(messages.filter(message=>(message._id !== messageId)))
     }
 
     const {data:session} = useSession()
-    console.log("About to print session");
+    // console.log("About to print session");
     
-console.log(session);
+// console.log(session);
 
     const form = useForm({
         resolver:zodResolver(acceptMessageSchema)
