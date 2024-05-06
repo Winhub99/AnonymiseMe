@@ -54,7 +54,7 @@ const MessageCard = ({message,onMessageDelete}:MessageCardProps) => {
     <Card className="card-bordered">
   <CardHeader>
   <div className="flex justify-between items-center">
-    <CardTitle>{message.toString()}</CardTitle>
+    <CardTitle>{message.content}</CardTitle>
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="destructive"><X className='w-5 h-5'/></Button>
