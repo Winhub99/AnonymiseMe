@@ -1,8 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Separator } from '@/components/ui/separator'
+
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/use-toast'
 import { contentSchema } from '@/schemas/contentSchema'
@@ -14,7 +13,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-const page = () => {
+const Page = () => {
 
   const {username}= useParams(); 
   const form = useForm<z.infer<typeof contentSchema>>({
@@ -49,7 +48,7 @@ const onSubmit = async(data: z.infer<typeof contentSchema>)=>{
     <div className='my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl'>
       <h2 className="text-4xl font-bold mb-4">Public Profile Link</h2>
       <div className='mb-4'>
-        <h2 className="text-xl font-medium mb-4">Send anonymous messages to {username}</h2>
+        <h2 className="text-xl font-medium mb-4">Send anonymous messages to @ {username}</h2>
         <Form {...form} >
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                         <FormField
@@ -59,7 +58,7 @@ const onSubmit = async(data: z.infer<typeof contentSchema>)=>{
                                 <FormItem>
                                     <FormLabel>Content</FormLabel>
                                     <FormControl>
-                                        <Textarea placeholder='Content' {...field}/>
+                                        <Textarea placeholder='Type your message here...' {...field}/>
                                     </FormControl>
                                  
                                     <FormMessage />
@@ -76,4 +75,4 @@ const onSubmit = async(data: z.infer<typeof contentSchema>)=>{
   )
 }
 
-export default page
+export default Page
