@@ -7,16 +7,18 @@
 //if he is accepting then push this msg in the reciever's messages array
 //retuirn the success message
 
-import { toast } from "@/components/ui/use-toast";
 import dbConnect from "@/lib/dbConnect";
 import UserModel, { Message } from "@/model/User";
 
 export async function POST(request:Request){
     await dbConnect()
     const {username,content}= await request.json();
+console.log("The username is: ",username,"and the content is : ",content);
 
     try {
         const user= await UserModel.findOne({username});
+        console.log("User found");
+        
         if(!user){
             return Response.json({
                 success:false,
@@ -34,8 +36,11 @@ export async function POST(request:Request){
             createdAt:new Date(),
             content:content
         }
+console.log(msg);
 
         user.messages.push(msg as Message)
+        console.log(user.messages);
+        
         await user.save()
         return Response.json({
             success:true,
