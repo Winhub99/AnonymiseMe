@@ -11,7 +11,7 @@ export async function POST(request:Request){
         if(userWithUsernameExistsAndIsVerified){
             return Response.json({
                 success:false,
-                message:"User already exists"
+                message:"User already exists and is already verified"
             },{status:400})
         }
 

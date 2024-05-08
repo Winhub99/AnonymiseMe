@@ -28,33 +28,14 @@ export default function SigninForm(){
   })
 
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
-    // try {
-
-    //   const response= await axios.post<ApiResponse>('/api/signin',data)
-    //   toast({
-    //     title:"Success",
-    //     description:response.data.message
-    //   })
-    //   router.push('/')
-    // } catch (error) {
-    //   console.error("Error occured while signing in",error);
-    //   const axiosError = error as AxiosError<ApiResponse>
-    //   toast({
-    //     title:"Signin Failed",
-    //     description:axiosError.response?.data.message,
-    //     variant:"destructive"
-    //   })
-
-    // }
-
     const result = await signIn('credentials', {
       redirect: false,
       identifier: data.identifier,
       password: data.password
     })
     
-    console.log(result);
-    console.log(`the identifier is ${data.identifier} and password is : ${data.password}`);
+   // console.log(result);
+  //console.log(`the identifier is ${data.identifier} and password is : ${data.password}`);
     
     
     if(result?.error){
