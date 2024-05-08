@@ -8,13 +8,13 @@ await dbConnect();
 try {
     
     const {code,username} =await request.json()
-    console.log("Code is here: ", code,"and username is: ",username);
+  //  console.log("Code is here: ", code,"and username is: ",username);
     
     const decodedUsername = decodeURIComponent(username)
-    console.log('the decoded username is: ',decodedUsername);
+ //   console.log('the decoded username is: ',decodedUsername);
     
     const user=await UserModel.findOne({username:decodedUsername,verifyCode:code})
-    console.log(user);
+   // console.log(user);
     
     if(!user){
         return Response.json({
